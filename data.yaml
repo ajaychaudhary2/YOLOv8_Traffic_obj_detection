@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['Bus', 'Car', 'Minibus', 'Truck']
+
+roboflow:
+  workspace: joaquin-dela-cruz-fongt
+  project: traffic-detection-ww3g7
+  version: 6
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/joaquin-dela-cruz-fongt/traffic-detection-ww3g7/dataset/6
