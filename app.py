@@ -24,10 +24,12 @@ model=YOLO(model_path)
 @app.route("/",methods=["GET","POST"])
 
 def upload_img():
+    
     if request.method=="POST":
         if "file" not in request.files:
             return(redirect.url)
         
+       
         file=request.files["file"]
         if "file" == "":
             return(redirect.url)
@@ -58,12 +60,16 @@ def upload_img():
                 cv2.putText(img,label,(x1,y1-10),cv2.FONT_HERSHEY_COMPLEX,0.5,(0,255,0),1)
                 
                 
+            
             processed_p=os.path.join(app.config["PROCCESSED_F"],file.filename)
             success=cv2.imwrite(processed_p,img)
+            
             
             if not success:
                 print(f"Error processed image is not save  {processed_p}")
                 return render_template("index.html",uploaded_img=None, processed_img=None)
+            
+            
             
             
             upload_img_url=url_for("static",filename=f"uploads/{file.filename}")
@@ -71,13 +77,18 @@ def upload_img():
             
             return render_template("index.html",upload_img=upload_img_url,processed_img=processed_img_url)
     
+    
+    
     return render_template("index.html",upload_img=None,processed_img=None)
+
+
 
 
 # Serve processed images correctly
 @app.route("/static/Prediction/<filename>")
 def serve_prediction(filename):
     return send_from_directory(app.config["PROCCESSED_F"], filename)
+
 
 
 if __name__ == "__main__":
